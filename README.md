@@ -4,14 +4,15 @@
 ---
 
 ## Overview
-CrisisSim is an **LLM-driven agentic AI simulation framework** for disaster response scenarios such as earthquakes.  
-The system models a **grid-based crisis environment** where heterogeneous agents including **medics, drones, trucks, survivors, hospitals, fires, rubble, and depots** operate collaboratively using **Large Language Model reasoning**, rather than rule-based logic.
+
+CrisisSim is an **LLM-driven agentic AI simulation framework** for disaster response scenarios such as earthquakes. The system models a **grid-based crisis environment** where heterogeneous agents including **medics, drones, trucks, survivors, hospitals, fires, rubble, and depots** operate collaboratively using **Large Language Model reasoning**, rather than rule-based logic.
 
 The project demonstrates how **agentic reasoning frameworks** can be applied to emergency management, coordination, and decision-making under uncertainty.
 
 ---
 
 ## Key Features
+
 - **LLM-Based Decision Making**
   - Implements three agentic reasoning frameworks:
     - ReAct
@@ -41,7 +42,12 @@ The project demonstrates how **agentic reasoning frameworks** can be applied to 
   - Aggregated CSV summaries and plots
 
 ---
+
+## System Architecture
+
+```
 World → Sensors → LLM Planner → JSON Commands → World Update
+```
 
 - Sensors provide a bounded JSON state
 - LLM planners reason over the state
@@ -51,6 +57,8 @@ World → Sensors → LLM Planner → JSON Commands → World Update
 ---
 
 ## Repository Structure
+
+```
 crisis-sim/
 │
 ├── main.py                  # Headless simulation runner
@@ -86,10 +94,12 @@ crisis-sim/
     ├── raw/                 # Per-run JSON metrics
     ├── agg/                 # Aggregated CSV summaries
     └── plots/               # Generated charts
+```
 
 ---
 
 ## Action JSON Schema
+
 All planners must output actions in the following format:
 
 ```json
@@ -100,82 +110,85 @@ All planners must output actions in the following format:
     { "agent_id": "3", "type": "act", "action_name": "drop_at_hospital" }
   ]
 }
-Valid actions
+```
 
-pickup_survivor
+### Valid Actions
 
-drop_at_hospital
+- `pickup_survivor`
+- `drop_at_hospital`
+- `extinguish_fire`
+- `clear_rubble`
+- `recharge`
+- `resupply`
 
-extinguish_fire
+---
 
-clear_rubble
+## Installation
 
-recharge
-
-resupply
+```bash
 pip install -r requirements.txt
-LLM Configuration
+```
+
+### LLM Configuration
 
 Set your API key as an environment variable:
 
+```bash
 export GROQ_API_KEY=your_api_key
 # or
 export GEMINI_API_KEY=your_api_key
-Running the Simulation
-Headless Mode
+```
+
+---
+
+## Running the Simulation
+
+### Headless Mode
+
+```bash
 python main.py --map configs/map_small.yaml --strategy react --seed 42
+```
 
-GUI Mode
+### GUI Mode
+
+```bash
 python server.py
+```
 
-Experiments
+---
 
-3 maps: small, medium, hard
+## Experiments
 
-3 planning strategies
-
-5 random seeds per configuration
-
-Minimum 45 experimental runs
+- **3 maps**: small, medium, hard
+- **3 planning strategies**: ReAct, Reflexion, Plan-and-Execute
+- **5 random seeds** per configuration
+- **Minimum 45 experimental runs**
 
 All outputs are saved automatically under:
+- `logs/`
+- `results/raw/`
+- `results/agg/summary.csv`
+- `results/plots/`
 
-logs/
+---
 
-results/raw/
+## Metrics Collected
 
-results/agg/summary.csv
+- Survivors rescued
+- Deaths
+- Average rescue time
+- Fires extinguished
+- Roads cleared
+- Energy usage
+- Invalid JSON outputs
+- Replanning events
+- Hospital overflow events
 
-results/plots/
+---
 
-Metrics Collected
 
-Survivors rescued
 
-Deaths
 
-Average rescue time
+## Contributing
 
-Fires extinguished
-
-Roads cleared
-
-Energy usage
-
-Invalid JSON outputs
-
-Replanning events
-
-Hospital overflow events
-
-Academic Context
-
-Course: Agentic AI
-
-Institution: FAST–NUCES
-
-Assignment: CrisisSim – Agentic AI for Disaster Response
-
-This project is designed for academic evaluation and research purposes.
-
-## System Architecture
+This is an academic project. For questions or suggestions, please contact the course instructor or project maintainer.
